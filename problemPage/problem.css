@@ -1,4 +1,4 @@
-/* 2020/02/03 */
+/* 2020/02/04 */
 /*
   mainColor: MediumSeaGreen / #01f97d
   backgroundColor: lightgray
@@ -301,9 +301,9 @@ body.fullScreen {
   border-bottom: 1px solid #f0f0f0;
 }
 
-/* uploadFileApp */
+/* appUploadFile */
 
-#uploadFileApp {
+#appUploadFile {
   position: relative;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;

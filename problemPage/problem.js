@@ -1,9 +1,17 @@
-﻿// 2020/02/03
-// app2 for lang, copy toolip, copy popup, theme, tab
+﻿// 2020/02/04
+// appNavbar
 
 
-var app2 = new Vue({
-  el: "#app2",
+var appNavbar = new Vue({
+  el: "#appNavbar"
+})
+
+
+// appEditorConfig for lang, copy toolip, copy popup, theme, tab
+
+
+var appEditorConfig = new Vue({
+  el: "#appEditorConfig",
   data: {
     langDisplay: "C++",
     showCopyPopup: false,
@@ -56,11 +64,11 @@ var app2 = new Vue({
       submitObj.language = selectedLang;
       if (selectedLang == "python") {
         editor.session.setMode("ace/mode/python");
-        uploadFileApp.showHeaderFile = false;
-        uploadFileApp.headerFile = null;
+        appUploadFile.showHeaderFile = false;
+        appUploadFile.headerFile = null;
       } else {
         editor.session.setMode("ace/mode/c_cpp");
-        uploadFileApp.showHeaderFile = true;
+        appUploadFile.showHeaderFile = true;
       }
     },
     clickTheme() {
@@ -74,7 +82,7 @@ var app2 = new Vue({
         tabContent[i].style.display = "none";
       }
       document.getElementById(id).style.display = "block";
-      uploadFileApp.uploadFileMode = (id == "uploadFileTab");
+      appUploadFile.uploadFileMode = (id == "uploadFileTab");
     }
   }
 })
@@ -95,29 +103,29 @@ function creatFileReaders() {
   }
 }
 function readMainFileContent() {
-  if (uploadFileApp.mainFile != null)
-    mainFileReader.readAsText(uploadFileApp.mainFile);
+  if (appUploadFile.mainFile != null)
+    mainFileReader.readAsText(appUploadFile.mainFile);
 }
 function readImplementFileContent() {
   var i = 0;
   for (i=0; i<maxFileAmount; i++)
-    if (uploadFileApp.implementFile != null && uploadFileApp.implementFile[i] != undefined)
-      implementFileReaders[i].readAsText(uploadFileApp.implementFile[i]);
+    if (appUploadFile.implementFile != null && appUploadFile.implementFile[i] != undefined)
+      implementFileReaders[i].readAsText(appUploadFile.implementFile[i]);
 }
 function readHeaderFileContent() {
   var i = 0;
   for (i=0; i<maxFileAmount; i++)
-    if (uploadFileApp.headerFile != null && uploadFileApp.headerFile[i] != undefined)
-      headerFileReaders[i].readAsText(uploadFileApp.headerFile[i]);
+    if (appUploadFile.headerFile != null && appUploadFile.headerFile[i] != undefined)
+      headerFileReaders[i].readAsText(appUploadFile.headerFile[i]);
 }
 
 
-// uploadFileApp
+// appUploadFile
 
 
-var uploadFileApp = new Vue({
+var appUploadFile = new Vue({
   delimiters: ['${', '}'],
-  el: "#uploadFileApp",
+  el: "#appUploadFile",
   data: {
     uploadFileMode: false,
     showHeaderFile: true,
@@ -181,20 +189,20 @@ var testMode = false
 var tmpObj = {}
 function copyFileStringsToSubmitObj() {
   submitObj.file["file1"] = mainFileReader.result;
-  if (uploadFileApp.mainFile == null)
+  if (appUploadFile.mainFile == null)
     submitObj.file["file1"] = "";
   var i = 0;
   for (i=0; i<maxFileAmount; i++) {
-    if (uploadFileApp.implementFile != null && uploadFileApp.implementFile.length > 0) {
-      if (implementFileReaders[i].result != null && i < uploadFileApp.implementFile.length)
+    if (appUploadFile.implementFile != null && appUploadFile.implementFile.length > 0) {
+      if (implementFileReaders[i].result != null && i < appUploadFile.implementFile.length)
         submitObj.file["file"+(i+2)] = implementFileReaders[i].result;
       else
         delete submitObj.file["file"+(i+2)];
     } else {
       delete submitObj.file["file"+(i+2)];
     }
-    if (uploadFileApp.headerFile != null && uploadFileApp.headerFile.length > 0) {
-      if (headerFileReaders[i].result != null && i < uploadFileApp.headerFile.length)
+    if (appUploadFile.headerFile != null && appUploadFile.headerFile.length > 0) {
+      if (headerFileReaders[i].result != null && i < appUploadFile.headerFile.length)
         submitObj.headerFile["file"+(i+1)] = headerFileReaders[i].result;
       else
         delete submitObj.headerFile["file"+(i+1)];
@@ -205,12 +213,12 @@ function copyFileStringsToSubmitObj() {
 }
 
 
-// app3 for submit
+// appSubmit for submit
 
 
-var app3 = new Vue({
+var appSubmit = new Vue({
   delimiters: ['${', '}'],
-  el: "#app3",
+  el: "#appSubmit",
   data: {
     showSpinner: false,
     codeState: "",
@@ -234,14 +242,14 @@ var app3 = new Vue({
     submitCode() {
       document.getElementById("submitBtn").setAttribute("disabled", "disabled");
       this.showSpinner = true;
-      if (uploadFileApp.uploadFileMode) {
+      if (appUploadFile.uploadFileMode) {
         copyFileStringsToSubmitObj();
-        if (uploadFileApp.implementFile != null)
-          submitObj.fileAmount = 1 + uploadFileApp.implementFile.length;
+        if (appUploadFile.implementFile != null)
+          submitObj.fileAmount = 1 + appUploadFile.implementFile.length;
         else
           submitObj.fileAmount = 1;
-        if (uploadFileApp.headerFile != null)
-          submitObj.headerFileAmount = uploadFileApp.headerFile.length;
+        if (appUploadFile.headerFile != null)
+          submitObj.headerFileAmount = appUploadFile.headerFile.length;
         else
           submitObj.headerFileAmount = 0;
       } else {
@@ -258,27 +266,27 @@ var app3 = new Vue({
       axios.post(postURL, submitObj)
         .then(function (response) {
           console.log(response);
-          app3.showSpinner = false;
+          appSubmit.showSpinner = false;
           if (testMode)
             tmpObj = JSON.parse(response.data.freeform);
           else
             tmpObj = response.data; console.log(tmpObj);
-          app3.codeState           = tmpObj.codeState;
-          app3.errorMessage        = tmpObj.errorMessage;
-          app3.exeTime             = tmpObj.exeTime;
-          app3.errorOutputCompare  = tmpObj.errorOutputCompare;
-          app3.OutputAvailable     = (tmpObj.OutputAvailable == "true");
-          app3.htmlWrongOutput     = '<pre id="wrongOutput" class="samplePre2">' + tmpObj.wrongOutput + '</pre>';
-          app3.htmlExpectedOutput  = '<pre id="expectedOutput" class="samplePre2">' + tmpObj.expectedOutput + '</pre>';
-          app3.memoryUsage         = tmpObj.memoryUsage;
-          app3.verdictTime         = tmpObj.verdictTime;
-          app3.hash                = tmpObj.hash;
-          app3["show" + tmpObj.codeState] = true;
+          appSubmit.codeState           = tmpObj.codeState;
+          appSubmit.errorMessage        = tmpObj.errorMessage;
+          appSubmit.exeTime             = tmpObj.exeTime;
+          appSubmit.errorOutputCompare  = tmpObj.errorOutputCompare;
+          appSubmit.OutputAvailable     = (tmpObj.OutputAvailable == "true");
+          appSubmit.htmlWrongOutput     = '<pre id="wrongOutput" class="samplePre2">' + tmpObj.wrongOutput + '</pre>';
+          appSubmit.htmlExpectedOutput  = '<pre id="expectedOutput" class="samplePre2">' + tmpObj.expectedOutput + '</pre>';
+          appSubmit.memoryUsage         = tmpObj.memoryUsage;
+          appSubmit.verdictTime         = tmpObj.verdictTime;
+          appSubmit.hash                = tmpObj.hash;
+          appSubmit["show" + tmpObj.codeState] = true;
         })
         .catch(function (error) {
-          app3.showSpinner = false;
+          appSubmit.showSpinner = false;
           console.log(error);
-          app3.showERR = true;
+          appSubmit.showERR = true;
         })
       setTimeout(function () {document.getElementById("submitBtn").removeAttribute("disabled");}, 2000);
     }
@@ -296,7 +304,7 @@ var userInfo = {
 }
 
 window.onload = function() {
-  app2.openTab("codeEditorTab");
+  appEditorConfig.openTab("codeEditorTab");
   userInfo.who = localStorage.getItem("who");
   userInfo.userName = localStorage.getItem("userName");
   userInfo.hash = localStorage.getItem("hash");
@@ -310,7 +318,7 @@ window.onload = function() {
   submitObj.qID = qID;
   editor.setValue(initCode);
   document.getElementsByTagName("body")[0].className = "w3-animate-opacity";
-  document.getElementById("app1").className = "w3-animate-top";
+  document.getElementById("appNavbar").className = "w3-animate-top";
   document.getElementById("mainBlock1").className = "mainBlock1 w3-animate-zoom";
   document.getElementById("mainBlock2").className = "mainBlock2 w3-animate-bottom";
   document.getElementsByTagName("html")[0].style.visibility = "visible";
@@ -325,8 +333,8 @@ function copyFn(id) {
   var val = document.getElementById(id);
   window.getSelection().selectAllChildren(val);
   document.execCommand("Copy");
-  app2.showCopyPopup = true;
-  setTimeout(function () { app2.showCopyPopup = false; }, 1500);
+  appEditorConfig.showCopyPopup = true;
+  setTimeout(function () { appEditorConfig.showCopyPopup = false; }, 1500);
 }
 
 
