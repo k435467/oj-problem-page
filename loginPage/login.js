@@ -1,4 +1,4 @@
-// 20191209
+// 2020/02/04
 
 var loginObj = {
   "action" : "login",
@@ -115,5 +115,5 @@ function loginSuccess() {
   localStorage.setItem("who", tmpObj.who);
   localStorage.setItem("userName", tmpObj.userName);
   localStorage.setItem("hash", tmpObj.hash);
-  window.location.replace("../IDE/problem/p000");
+  window.location.href = "../problemPage/p0.html";
 }
