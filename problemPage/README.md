@@ -1,6 +1,45 @@
-# Feature
 
-### JSON
+A online judge problem page.
+
+## Features
+
+- RWD
+- one-click copy sample in/out
+- multiple file uploader (main, multiple implement files, multiple header files)
+- powerful code editor - [ace](https://ace.c9.io/)
+  - syntax highlighting for multi-language (C++, C, Python...)
+  - over 30 themes.
+  - automatic indent and outdent
+  - live auto completion
+  - indent guides
+  - code folding
+  - [keyboard shortcuts](https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts)
+  - additional: `F11` full screen, `Ctrl-+/=/-` font size
+  - more...
+
+## Used Frameworks and Tools
+
+- [W3.CSS](https://www.w3schools.com/w3css/)
+- [Bootstrap-Vue](https://bootstrap-vue.js.org/)
+- [Vue](https://vuejs.org/)
+- [Axios](https://github.com/axios/axios)
+- [Ace](https://ace.c9.io/)
+- [httpbin](https://httpbin.org/)
+
+## Test Mode
+
+call motheds below in browser console.
+
+- Test.Login()
+- Test.Logout()
+- Test.SubmitAC()
+- Test.SubmitCE()
+- Test.SubmitTLE()
+- Test.SubmitWA()
+- Test.SubmitMLE()
+
+#### JSON
+
 ```js
 { // request
     "action" : "submit_code",

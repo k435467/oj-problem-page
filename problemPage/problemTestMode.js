@@ -17,6 +17,10 @@ class TestModeClass {
     localStorage.setItem("hash", this.hash);
     location.reload();
   }
+  Logout() {
+    localStorage.clear();
+    location.reload();
+  }
   SubmitAC() {
     postURL = this.postACurl;  // postURL declared in problem.js #187
     document.getElementById('submitBtn').click();
