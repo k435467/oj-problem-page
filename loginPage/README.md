@@ -1,7 +1,8 @@
 
 A simple login page.
 
-![screenshot](../image/screenshotLoginPage.png)
+<img width="400" alt="screenshot" src="../image/screenshotLoginPage.png">
+
 
 ## Features
 
