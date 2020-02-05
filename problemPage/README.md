@@ -1,7 +1,7 @@
 
 A online judge problem page.
 
-![screenshot](../image/screenshoProblemPage.png)
+<img width="500" alt="screenshot" src="../image/screenshoProblemPage.png">
 
 ## Features
 
