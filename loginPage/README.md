@@ -1,9 +1,11 @@
 
 A simple login page.
 
+![screenshot](../image/screenshotLoginPage.png)
+
 ## Features
 
-- instant validation (only number and alphabet)
+- instant validation (number and alphabet)
 
 ## Used Frameworks and Tools
 

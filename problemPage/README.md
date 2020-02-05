@@ -1,6 +1,8 @@
 
 A online judge problem page.
 
+![screenshot](../image/screenshoProblemPage.png)
+
 ## Features
 
 - RWD
@@ -14,7 +16,7 @@ A online judge problem page.
   - indent guides
   - code folding
   - [keyboard shortcuts](https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts)
-  - additional: `F11` full screen, `Ctrl-+/=/-` font size
+  - additional: `F11` full screen, `Ctrl-+/=/-` font size, drag bar to adjust height
   - more...
 
 ## Used Frameworks and Tools
